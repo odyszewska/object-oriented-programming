@@ -2,4 +2,4 @@
 i. Oliwia Dyszewska
 ii. grupa 9, poniedziałek 18.30
 iii. kotlet
-iv.
+iv. odyszewska@student.agh.edu.pl
