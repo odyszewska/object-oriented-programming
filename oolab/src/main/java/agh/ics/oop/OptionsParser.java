@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OptionsParser {
-    public static MoveDirection[] parse(String[] args) {
+    public static List<MoveDirection> parse(String[] commands) {
         List<MoveDirection> directions = new ArrayList<>();
-        for (String arg : args) {
-            switch (arg) {
+        for (String command : commands) {
+            switch (command) {
                 case "f" -> directions.add(MoveDirection.FORWARD);
                 case "b" -> directions.add(MoveDirection.BACKWARD);
                 case "r" -> directions.add(MoveDirection.RIGHT);
                 case "l" -> directions.add(MoveDirection.LEFT);
             }
         }
-        return directions.toArray(new MoveDirection[0]);
+        return directions;
     }
 }
 

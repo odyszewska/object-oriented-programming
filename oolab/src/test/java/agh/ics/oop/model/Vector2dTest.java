@@ -8,6 +8,7 @@ class Vector2dTest {
     void testEquals() {
         assertEquals(new Vector2d(1, 2), new Vector2d(1, 2));
         assertNotEquals(new Vector2d(1, 2), new Vector2d(2, 1));
+        assertNotEquals(new Vector2d(1, 2), "some string");
     }
 
     @Test
