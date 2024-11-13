@@ -12,9 +12,13 @@ public class Animal {
         this.position = initialPosition;
     }
 
+    public Vector2d getPosition(){
+        return this.position;
+    }
+
     @Override
     public String toString() {
-        return "Position: " + position + ", Orientation: " + orientation;
+        return this.orientation.toString();
     }
 
     public boolean isAt(Vector2d position) {
@@ -22,27 +26,21 @@ public class Animal {
     }
 
 
-    public void move(MoveDirection direction) {
+    public void move(MoveDirection direction, MoveValidator moveValidator) {
+        Vector2d newPosition = this.position;
+
         switch (direction) {
-            case RIGHT -> orientation = orientation.next();
-            case LEFT -> orientation = orientation.previous();
-            case FORWARD -> {
-                Vector2d newPosition = position.add(orientation.toUnitVector());
-                if (isWithinBounds(newPosition)) {
-                    position = newPosition;
-                }
-            }
-            case BACKWARD -> {
-                Vector2d newPosition = position.subtract(orientation.toUnitVector());
-                if (isWithinBounds(newPosition)) {
-                    position = newPosition;
-                }
+            case FORWARD -> newPosition = this.position.add(this.orientation.toUnitVector());
+            case BACKWARD -> newPosition = this.position.subtract(this.orientation.toUnitVector());
+            case LEFT -> this.orientation = this.orientation.previous();
+            case RIGHT -> this.orientation = this.orientation.next();
+        }
+
+        if (direction == MoveDirection.FORWARD || direction == MoveDirection.BACKWARD) {
+            if (moveValidator.canMoveTo(newPosition)) {
+                this.position = newPosition;
             }
         }
-    }
-
-    private boolean isWithinBounds(Vector2d position) {
-        return position.follows(new Vector2d(-1, -1)) && position.precedes(new Vector2d(5, 5));
     }
 
 }
