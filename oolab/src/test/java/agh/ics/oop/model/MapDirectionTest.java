@@ -19,4 +19,12 @@ class MapDirectionTest {
         assertEquals(MapDirection.EAST, MapDirection.SOUTH.previous());
         assertEquals(MapDirection.SOUTH, MapDirection.WEST.previous());
     }
+
+    @Test
+    void testToString(){
+        assertEquals("^",MapDirection.NORTH.toString());
+        assertEquals(">",MapDirection.EAST.toString());
+        assertEquals("v",MapDirection.SOUTH.toString());
+        assertEquals("<",MapDirection.WEST.toString());
+    }
 }
