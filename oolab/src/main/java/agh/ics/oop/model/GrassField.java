@@ -1,14 +1,16 @@
 package agh.ics.oop.model;
 
 import java.util.Random;
-import agh.ics.oop.model.util.MapVisualizer;
-import java.util.Collection;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
 
 
 public class GrassField extends AbstractWorldMap {
+    private int width;
+    private int height;
+
     public GrassField(int n) {
         int maxCoordinate = (int) Math.sqrt(n * 10);
 
@@ -27,26 +29,6 @@ public class GrassField extends AbstractWorldMap {
     }
 
 
-    @Override
-    public String toString() {
-        MapVisualizer visualizer = new MapVisualizer(this);
-
-        Vector2d lowerLeft = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        Vector2d upperRight = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
-
-        for (Map.Entry<Vector2d, Animal> i : super.animals.entrySet()) {
-            Vector2d position = i.getKey();
-            lowerLeft = lowerLeft.lowerLeft(position);
-            upperRight = upperRight.upperRight(position);
-        }
-        for (Map.Entry<Vector2d, Grass> i : this.grasses.entrySet()) {
-            Vector2d position = i.getKey();
-            lowerLeft = lowerLeft.lowerLeft(position);
-            upperRight = upperRight.upperRight(position);
-        }
-
-        return visualizer.draw(lowerLeft, upperRight);
-    }
 
     @Override
     public WorldElement objectAt(Vector2d position) {
@@ -63,11 +45,24 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public Collection<WorldElement> getElements() {
-        Collection<WorldElement> elements = new ArrayList<>(super.getElements());
+    public List <WorldElement> getElements() {
+        List<WorldElement> elements = new ArrayList<>(super.getElements());
         elements.addAll(grasses.values());
         return elements;
     }
+    @Override
+    public Boundary getCurrentBounds(){
+        Vector2d lowerLeft = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Vector2d upperRight = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        for (Map.Entry<Vector2d, Animal> i:super.animals.entrySet()){
+            lowerLeft = lowerLeft.lowerLeft(i.getKey());
+            upperRight = upperRight.upperRight(i.getKey());
+        }
+        for (Map.Entry<Vector2d, Grass> i:this.grasses.entrySet()){
+            lowerLeft = lowerLeft.lowerLeft(i.getKey());
+            upperRight = upperRight.upperRight(i.getKey());
+        }
 
-
+        return new Boundary(lowerLeft,upperRight);
+    }
 }

@@ -26,13 +26,14 @@ class OptionsParserTest {
 
     @Test
     void testOptionParserWithInvalidCommands() {
-        String[] commandsWithInvalid = {"f", "b", "invalid", "r", "x", "l"};
+        String[] commandsWithInvalid = {"f", "b", "invalid", "r", "l"};
         List<MoveDirection> expected = List.of(
                 MoveDirection.FORWARD,
                 MoveDirection.BACKWARD,
                 MoveDirection.RIGHT,
                 MoveDirection.LEFT
         );
-        assertEquals(expected, OptionsParser.parse(commandsWithInvalid));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> OptionsParser.parse(commandsWithInvalid));
+        assertEquals("invalid is not legal move specification", exception.getMessage());
     }
 }
