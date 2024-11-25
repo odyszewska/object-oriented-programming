@@ -47,4 +47,23 @@ class SimulationTest {
         assertEquals(expectedDirections, actualDirections);
     }
 
+
+    @Test
+    public void testToString() {
+        RectangularMap map = new RectangularMap(5, 5);
+        Vector2d position1 = new Vector2d(2, 2);
+        Vector2d position2 = new Vector2d(3, 3);
+        map.place(new Animal(position1));
+        map.place(new Animal(position2));
+
+        String expected = " y\\x  0 1 2 3 4\n" +
+                "  5: -----------\n" +
+                "  4: | | | | | |\n" +
+                "  3: | | | |^| |\n" +
+                "  2: | | |^| | |\n" +
+                "  1: | | | | | |\n" +
+                "  0: | | | | | |\n" +
+                " -1: -----------\n";
+        assertEquals(expected.replaceAll("\\s+", " "), map.toString().replaceAll("\\s+", " "));
+    }
 }

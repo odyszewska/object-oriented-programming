@@ -3,6 +3,7 @@ package agh.ics.oop.model;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Collection;
 
 class RectangularMapTest {
 
@@ -92,5 +93,16 @@ class RectangularMapTest {
         assertEquals(animal1, map.objectAt(new Vector2d(2,2)));
     }
 
+    @Test
+    public void testGetElementsRectangularMap() {
+        RectangularMap map = new RectangularMap(5, 5);
+        Animal animal1 = new Animal(new Vector2d(2, 2));
+        Animal animal2 = new Animal(new Vector2d(3, 3));
+        map.place(animal1);
+        map.place(animal2);
+
+        Collection<WorldElement> elements = map.getElements();
+        assertEquals(2, elements.size());
+    }
 
 }
