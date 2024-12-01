@@ -1,14 +1,13 @@
 package agh.ics.oop.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.UUID;
 
 public class RectangularMap extends AbstractWorldMap {
     private int width;
     private int height;
-    private final Map<Vector2d, Animal> animals = new HashMap<>();
 
     public RectangularMap(int width, int height) {
+        super(UUID.randomUUID());
         this.width = width;
         this.height = height;
     }

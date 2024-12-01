@@ -6,9 +6,9 @@ import agh.ics.oop.model.util.MapVisualizer;
 
 public abstract class AbstractWorldMap implements WorldMap {
 
-    protected final Map<Vector2d, Grass> grasses = new HashMap<>();
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     private final List<MapChangeListener> observers = new ArrayList<>();
+    private final UUID id;
 
     @Override
     public void place(Animal animal) throws IncorrectPositionException{
@@ -76,6 +76,13 @@ public abstract class AbstractWorldMap implements WorldMap {
         for (MapChangeListener observer: observers){
             observer.mapChanged(this,message);
         }
+    }
+
+    protected AbstractWorldMap(UUID id){
+        this.id = id;
+    }
+    public UUID getId() {
+        return this.id;
     }
 }
 
