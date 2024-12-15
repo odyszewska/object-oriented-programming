@@ -1,17 +1,12 @@
 package agh.ics.oop.model;
 
-import java.util.Random;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-
+import java.util.*;
 
 
 public class GrassField extends AbstractWorldMap {
-    private int width;
-    private int height;
-
+    protected final Map<Vector2d, Grass> grasses = new HashMap<>();
     public GrassField(int n) {
+        super(UUID.randomUUID());
         int maxCoordinate = (int) Math.sqrt(n * 10);
 
         Random random = new Random();
