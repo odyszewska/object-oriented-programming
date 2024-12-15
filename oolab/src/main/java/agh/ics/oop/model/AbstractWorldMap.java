@@ -1,22 +1,22 @@
 package agh.ics.oop.model;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import agh.ics.oop.model.util.MapVisualizer;
 
 public abstract class AbstractWorldMap implements WorldMap {
 
     protected final Map<Vector2d, Grass> grasses = new HashMap<>();
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
+    private final List<MapChangeListener> observers = new ArrayList<>();
 
     @Override
-    public boolean place(Animal animal) {
-        if(canMoveTo(animal.getPosition())) {
-            animals.put(animal.getPosition(), animal);
-            return true;
+    public void place(Animal animal) throws IncorrectPositionException{
+        if(!canMoveTo(animal.getPosition())) {
+            throw new IncorrectPositionException(animal.getPosition());
         }
-        return false;
+        animals.put(animal.getPosition(), animal);
+        mapChanged("New animal placed on position: " + animal.getPosition());
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -25,9 +25,15 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
-        animals.remove(animal.getPosition(), animal);
+        Vector2d oldPosition = animal.getPosition();
         animal.move(direction, this);
-        animals.put(animal.getPosition(), animal);
+        Vector2d newPosition = animal.getPosition();
+        if (!oldPosition.equals(newPosition)){
+            animals.remove(oldPosition);
+            animals.put(newPosition, animal);
+            mapChanged("Animal moved from: "+oldPosition+" to: "+newPosition);
+        }
+
     }
 
     @Override
@@ -46,13 +52,31 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     @Override
-    public Collection<WorldElement> getElements() {
-        return animals.values().stream()
-                .map(animal -> (WorldElement) animal)
-                .collect(Collectors.toList());
+    public List<WorldElement> getElements() {
+        return new ArrayList<>(animals.values());
     }
 
+    public abstract Boundary getCurrentBounds();
 
+
+    @Override
+    public String toString() {
+        MapVisualizer mapVisualizer = new MapVisualizer(this);
+        Boundary bounds = this.getCurrentBounds();
+        return mapVisualizer.draw(getCurrentBounds().lowerLeft(), getCurrentBounds().upperRight());
+    }
+
+    public void addObserver(MapChangeListener observer){
+        observers.add(observer);
+    }
+    public void removeObserver(MapChangeListener observer){
+        observers.remove(observers);
+    }
+    protected void mapChanged(String message) {
+        for (MapChangeListener observer: observers){
+            observer.mapChanged(this,message);
+        }
+    }
 }
 
 
