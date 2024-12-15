@@ -33,7 +33,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void clearGrid() {
-        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0)); // hack to retain visible grid lines
+        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0));
         mapGrid.getColumnConstraints().clear();
         mapGrid.getRowConstraints().clear();
     }
@@ -60,12 +60,12 @@ public class SimulationPresenter implements MapChangeListener {
             for (int x = 0; x < width; x++) {
                 Label label = new Label(String.valueOf(bounds.lowerLeft().getX() + x));
                 GridPane.setHalignment(label, HPos.CENTER);
-                mapGrid.add(label, x + 1, 0); // Oś X
+                mapGrid.add(label, x + 1, 0);
             }
             for (int y = 0; y < height; y++) {
                 Label label = new Label(String.valueOf(bounds.upperRight().getY() - y));
                 GridPane.setHalignment(label, HPos.CENTER);
-                mapGrid.add(label, 0, y + 1); // Oś Y
+                mapGrid.add(label, 0, y + 1);
             }
             Label cornerLabel = new Label("y/x");
             GridPane.setHalignment(cornerLabel, HPos.CENTER);
