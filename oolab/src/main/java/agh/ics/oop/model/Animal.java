@@ -15,6 +15,7 @@ public class Animal implements WorldElement{
     public Vector2d getPosition(){
         return this.position;
     }
+    public MapDirection getOrientation() { return this.orientation;}
 
     @Override
     public String toString() {
