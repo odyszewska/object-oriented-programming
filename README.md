@@ -1,5 +1,7 @@
-# PO_2024_PN1830_DYSZEWSKA
-# i. Oliwia Dyszewska
-# ii. grupa 9, poniedziałek 18.30
-# iii. kotlet
-# iv. [odyszewska@student.agh.edu.pl](https://gitexercises.fracz.com/committer/3cca8f18a6ba08f53cbb88fc191f17bfdbf1f4bd?email=odyszewska@student.agh.edu.pl
+# Object-Oriented Programming Tasks
+
+This repository contains solutions to assignments from the **Object-Oriented Programming** course. The tasks were completed as part of the course.
+
+## Task Instructions
+
+The task instructions can be found in [this repository](https://github.com/Soamid/obiektowe-lab)
